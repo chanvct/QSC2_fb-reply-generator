@@ -93,19 +93,19 @@ else:
         st.write("Time taken:", timer()-start)
         
               
-    with cite_sources:
+    # with cite_sources:
         
-        st.markdown('**Sources:**')
+    #     st.markdown('**Sources:**')
         
-        source_docs = retriever.get_relevant_documents(user_input)
+    #     source_docs = retriever.get_relevant_documents(user_input)
         
-        source_list = []
-        for doc in source_docs:
-            source = doc.metadata['source'].split('\\')[-1].strip('.txt')
-            source_list.append(source)
+    #     source_list = []
+    #     for doc in source_docs:
+    #         source = doc.metadata['source'].split('\\')[-1].strip('.txt')
+    #         source_list.append(source)
 
-        results_df = df[df['serial'].isin(source_list)]
+    #     results_df = df[df['serial'].isin(source_list)]
         
         
-        for index, row in results_df.iterrows():
-            st.write(row['title'] + ' | ' + row['source'] + ' | ' + row['date'])
+    #     for index, row in results_df.iterrows():
+    #         st.write(row['title'] + ' | ' + row['source'] + ' | ' + row['date'])
