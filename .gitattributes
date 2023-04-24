@@ -1,1 +1,2 @@
 ChromaDB/* filter=lfs diff=lfs merge=lfs -text
+ChromaDB/index/* filter=lfs diff=lfs merge=lfs -text
