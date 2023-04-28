@@ -12,17 +12,22 @@ from langchain.chat_models import ChatOpenAI
 from langchain import OpenAI
 import openai
 
-### load data_info
-df = pd.read_csv('data_info.csv')
+@st.cache_resource
+def load_database():
+    ### load data_info
+    df = pd.read_csv('data_info.csv')
+    
+    ### load vectordb
+    persist_directory = './ChromaDB/'
+    embedding = OpenAIEmbeddings(openai_api_key=st.secrets.openai.api_key)
+    vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
+    
+    ### Semantic search
+    retriever = vectordb.as_retriever(search_type="similarity", search_kwargs={"k":2})
+    
+    return df, vectordb, retriever
 
-### load vectordb
-persist_directory = './ChromaDB/'
-embedding = OpenAIEmbeddings(openai_api_key=st.secrets.openai.api_key)
-vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
-
-
-### Semantic search
-retriever = vectordb.as_retriever(search_type="similarity", search_kwargs={"k":2})
+df, vectordb, retriever = load_database()
 
 
 ### Streamlit UI
@@ -93,19 +98,19 @@ else:
         st.write("Time taken:", timer()-start)
         
               
-    # with cite_sources:
+    with cite_sources:
         
-    #     st.markdown('**Sources:**')
+        st.markdown('**Sources:**')
         
-    #     source_docs = retriever.get_relevant_documents(user_input)
+        source_docs = retriever.get_relevant_documents(user_input)
         
-    #     source_list = []
-    #     for doc in source_docs:
-    #         source = doc.metadata['source'].split('\\')[-1].strip('.txt')
-    #         source_list.append(source)
+        source_list = []
+        for doc in source_docs:
+            source = doc.metadata['source'].split('\\')[-1].strip('.txt')
+            source_list.append(source)
 
-    #     results_df = df[df['serial'].isin(source_list)]
+        results_df = df[df['serial'].isin(source_list)]
         
         
-    #     for index, row in results_df.iterrows():
-    #         st.write(row['title'] + ' | ' + row['source'] + ' | ' + row['date'])
+        for index, row in results_df.iterrows():
+            st.write(row['title'] + ' | ' + row['source'] + ' | ' + row['date'])
