@@ -36,6 +36,14 @@ form = st.form(key='my_form')
 response = st.container()
 cite_sources = st.container()
 
+with st.sidebar:
+    st.markdown("""**Description:**
+                This virtual assistant aims to help LTA officers draft a reply to a feedback/query sent in by the public.
+                It runs on OpenAI's GPT-3.5-Turbo model and has ingested information from LTA's public-facing website.
+                It will search the ingested information and use it in the reply ***if relevant**. 
+                (Cited sources may turn out irrelevant due to lack of related content from LTA's website)
+                The LTA officer can also input comments to influence the reply based on the next steps, actions to be taken, decisions made, considerations etc.
+                """)
 
 with header:
     st.title('QSC2 Feedback Reply Generator')
@@ -64,7 +72,7 @@ with form:
     else:   # if there are comments
     
         template = """You are a smart virtual assistant from the Land Transport Authority (LTA) of Singapore. Your job is to help an LTA officer draft a reply to the following feedback or query (Feedback//Query) sent in by the public.
-                    The reply should incorporate the Comments from the LTA officer below, which can consist of the next steps, actions to be taken, decisions made, considerations etc.
+                    The reply should incorporate the comments from the LTA officer below, which can consist of the next steps, actions to be taken, decisions made, considerations etc.
                     You can also make use of the knowledge in the source documents provided. Do not say anything that is not backed by facts from these documents. We are currently in April 2023.
                     
                     Feedback//Query: {user_input}
