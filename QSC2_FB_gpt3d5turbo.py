@@ -35,15 +35,19 @@ header = st.container()
 form = st.form(key='my_form')
 response = st.container()
 cite_sources = st.container()
+footer = st.container()
 
 with st.sidebar:
-    st.markdown("""**Description:**
-                This virtual assistant aims to help LTA officers draft a reply to a feedback/query sent in by the public.
-                It runs on OpenAI's GPT-3.5-Turbo model and has ingested information from LTA's public-facing website.
-                It will search the ingested information and use it in the reply ***if relevant**. 
-                (Cited sources may turn out irrelevant due to lack of related content from LTA's website)
-                The LTA officer can also input comments to influence the reply based on the next steps, actions to be taken, decisions made, considerations etc.
-                """)
+    st.markdown("**Description:**")
+    st.markdown("This virtual assistant aims to help LTA officers draft a reply to a feedback/query sent in by the public.")
+    st.markdown("It runs on OpenAI's GPT-3.5-Turbo model and has ingested information from LTA's public-facing website.\
+                It will search the ingested information and use it in the reply ***if relevant**. \
+                (Cited sources may turn out irrelevant due to lack of related content from LTA's website)\
+                The LTA officer can also input comments to influence the reply based on the next steps, actions to be taken, decisions made, considerations etc.")
+    st.markdown("~ App created by Valerie Chan | Data Science, ITCD")            
+                
+                
+                
 
 with header:
     st.title('QSC2 Feedback Reply Generator')
@@ -122,3 +126,6 @@ else:
         
         for index, row in results_df.iterrows():
             st.write(row['title'] + ' | ' + row['source'] + ' | ' + row['date'])
+            
+with footer:
+    st.markdown('~ App created by Valerie Chan | Data Science, ITCD')
