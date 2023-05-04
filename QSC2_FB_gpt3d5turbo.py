@@ -111,7 +111,7 @@ else:
         
               
     with cite_sources:
-        
+        st.markdown('--------------------------------------------------')
         st.markdown('**Sources:**')
         
         source_docs = retriever.get_relevant_documents(user_input)
@@ -128,4 +128,5 @@ else:
             st.write(row['title'] + ' | ' + row['source'] + ' | ' + row['date'])
             
 with footer:
+    st.markdown('--------------------------------------------------')
     st.markdown('~ App created by Valerie Chan | Data Science, ITCD')
