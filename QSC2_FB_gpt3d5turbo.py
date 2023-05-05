@@ -15,7 +15,7 @@ import openai
 @st.cache_resource
 def load_database():
     ### load data_info
-    df = pd.read_csv('data_info.csv')
+    df = pd.read_csv('data_info_May23.csv')
     
     ### load vectordb
     persist_directory = './ChromaDB/'
@@ -23,7 +23,7 @@ def load_database():
     vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
     
     ### Semantic search
-    retriever = vectordb.as_retriever(search_type="similarity", search_kwargs={"k":2})
+    retriever = vectordb.as_retriever(search_type="similarity", search_kwargs={"k":3})
     
     return df, vectordb, retriever
 
@@ -40,10 +40,11 @@ footer = st.container()
 with st.sidebar:
     st.markdown("**Description:**")
     st.markdown("This virtual assistant aims to help LTA officers draft a reply to a feedback/query sent in by the public.")
-    st.markdown("It runs on OpenAI's GPT-3.5-Turbo model and has ingested information from LTA's public-facing website.\
+    st.markdown("It runs on OpenAI's GPT-3.5-Turbo model and has ingested information from the following sources: \
+                LTA.gov.sg, MOT's parlimentary queries (Jan 2020 - Apr 2023), AskJamie (sample of 500), EFMS (sample of 100).\
                 It will search the ingested information and use it in the reply ***if relevant**. \
-                (Cited sources may turn out irrelevant due to lack of related content from LTA's website)\
-                The LTA officer can also input comments to influence the reply based on the next steps, actions to be taken, decisions made, considerations etc.")
+                (Cited sources may turn out irrelevant due to lack of related content from LTA's website)")
+    st.markdown("The LTA officer can also input comments to influence the reply based on the next steps, actions to be taken, decisions made, considerations etc.")
     st.markdown("~ App created by Valerie Chan | Data Science, ITCD")            
                 
                 
